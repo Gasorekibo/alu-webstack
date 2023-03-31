@@ -35,8 +35,11 @@ defaults
 
         frontend http80
                 bind *:80
-                bind *:443 ssl crt /etc/haproxy/certs/gasore.tech.pem
                 mode http
+                default_backend web_servers
+        frontend https443
+                bind *:443 ssl crt /etc/haproxy/gasore.tech.pem
+                http-request set-header X-Forwarded-Proto https
                 default_backend web_servers
         backend web_servers
                 balance roundrobin
